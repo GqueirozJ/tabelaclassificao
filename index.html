@@ -1,128 +1,81 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <title>
-    Imersão Dev - Aula 06
-  </title>
-  <link href ="https://gqueirozj.github.io/tabelaclassificao/style.css" rel="stylesheet"/>
-  <script> 
-//  com esta estrutura, podemos atribuir varias variaves a um objeto
-//                              chave.:valor
-var gabriel = {
-  nome: "Gabriel",
-  vitorias: 0,
-  empates: 0,
-  derrotas: 0,
-  pontos: 0
-};
-var miguel = {
-  nome: "Miguel",
-  vitorias: 0,
-  empates: 0,
-  derrotas: 0,
-  pontos: 0
-};
-
-// Quando fazemos a "function", estamos só crinado a função
-//e não chamando a função para compilar
-function calcularPontos(jogador) {
-  var pontos = jogador.vitorias * 3 + jogador.empates;
-  return pontos;
-}
-// aqui a função foi chamada e será executada, neste caso calculou os pontos do Gabriel. E o resultado ficara alocado na variavel.
-//var resultadoDosPontos = calcularPontos(gabriel);
-//console.log(resultadoDosPontos);
-// lista = array
-
-gabriel.pontos = calcularPontos(gabriel);
-miguel.pontos = calcularPontos(miguel);
-//
-
-// lista de jogadores
-var lJogadores = [gabriel, miguel];
-
-function exibirJogadoresNaTela(lJogadores) {
-  var elementosDosJogadores = "";
-  // A instrução for cria um loop, neste caso na lista de jogadores, e esta fazendo uma contagem de jogadores, do tamanho da lista até zerar
-  for (var i = 0; i < lJogadores.length; i++) {
-    elementosDosJogadores += "<tr><td>" + lJogadores[i].nome + "</td>";
-    elementosDosJogadores += "<td>" + lJogadores[i].vitorias + "</td>";
-    elementosDosJogadores += "<td>" + lJogadores[i].empates + "</td>";
-    elementosDosJogadores += "<td>" + lJogadores[i].derrotas + "</td>";
-    elementosDosJogadores += "<td>" + lJogadores[i].pontos + "</td>";
-    elementosDosJogadores +=
-      "<td><button onClick='adicionarVitoria(" + i + ")'>Vitória</button></td>";
-    elementosDosJogadores +=
-      "<td><button onClick='adicionarEmpate(" + i + ")'>Empate</button></td>";
-    elementosDosJogadores +=
-      "<td><button onClick='adicionarDerrota(" + i + ")'>Derrota</button></td>";
-    elementosDosJogadores += "</tr>";
-  }
-
-  var tabelaJogadores = document.getElementById("tabelaJogadores");
-  tabelaJogadores.innerHTML = elementosDosJogadores;
-  console.log = elementosDosJogadores;
-}
-exibirJogadoresNaTela(lJogadores);
-
-function adicionarVitoria(i) {
-  var jogador = lJogadores[i];
-  jogador.vitorias++;
-  jogador.pontos = calcularPontos(jogador);
-  exibirJogadoresNaTela(lJogadores);
-}
-function adicionarEmpate(i) {
-  var jogador = lJogadores[i];
-  jogador.empates++;
-  jogador.pontos = calcularPontos(jogador);
-  exibirJogadoresNaTela(lJogadores);
-}
-function adicionarDerrota(i) {
-  var jogador = lJogadores[i];
-  jogador.derrotas++;
-  exibirJogadoresNaTela(lJogadores);
-}
-
-</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imersão Dev - Aula 06</title>
+    <link href="https://gqueirozj.github.io/tabelaclassificao/style.css" rel="stylesheet"/>
+    <script>
+        var gabriel = { nome: "Gabriel", vitorias: 0, empates: 0, derrotas: 0, pontos: 0 };
+        var miguel = { nome: "Miguel", vitorias: 0, empates: 0, derrotas: 0, pontos: 0 };
+        
+        function calcularPontos(jogador) {
+            return jogador.vitorias * 3 + jogador.empates;
+        }
+        
+        gabriel.pontos = calcularPontos(gabriel);
+        miguel.pontos = calcularPontos(miguel);
+        
+        var lJogadores = [gabriel, miguel];
+        
+        function exibirJogadoresNaTela() {
+            var tabelaJogadores = document.getElementById("tabelaJogadores");
+            tabelaJogadores.innerHTML = "";
+            
+            for (var i = 0; i < lJogadores.length; i++) {
+                var jogador = lJogadores[i];
+                tabelaJogadores.innerHTML += `
+                    <tr>
+                        <td>${jogador.nome}</td>
+                        <td>${jogador.vitorias}</td>
+                        <td>${jogador.empates}</td>
+                        <td>${jogador.derrotas}</td>
+                        <td>${jogador.pontos}</td>
+                        <td><button onClick="adicionarVitoria(${i})">Vitória</button></td>
+                        <td><button onClick="adicionarEmpate(${i})">Empate</button></td>
+                        <td><button onClick="adicionarDerrota(${i})">Derrota</button></td>
+                    </tr>
+                `;
+            }
+        }
+        
+        function adicionarVitoria(i) {
+            var jogador = lJogadores[i];
+            jogador.vitorias++;
+            jogador.pontos = calcularPontos(jogador);
+            exibirJogadoresNaTela();
+        }
+        
+        function adicionarEmpate(i) {
+            var jogador = lJogadores[i];
+            jogador.empates++;
+            jogador.pontos = calcularPontos(jogador);
+            exibirJogadoresNaTela();
+        }
+        
+        function adicionarDerrota(i) {
+            var jogador = lJogadores[i];
+            jogador.derrotas++;
+            exibirJogadoresNaTela();
+        }
+        
+        window.onload = exibirJogadoresNaTela;
+    </script>
 </head>
-
 <body>
-  <h1>Tabela de classificação</h1>
-
-  <table style="width:100%">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Vitórias</th>
-        <th>Empates</th>
-        <th>Derrotas</th>
-        <th>Pontos</th>
-        <th colspan="3">Ações</th>
-      </tr>
-    </thead>
-    <tbody id="tabelaJogadores">
-      <tr>
-        <td>Gabriel</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td><button onClick="adicionarVitoria()">Vitória</button></td>
-        <td><button onClick="adicionarEmpate()">Empate</button></td>
-        <td><button onClick="adicionarDerrota()">Derrota</button></td>
-      </tr>
-      <tr>
-        <td>Miguel</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td><button onClick="adicionarVitoria()">Vitória</button></td>
-        <td><button onClick="adicionarEmpate()">Empate</button></td>
-        <td><button onClick="adicionarDerrota()">Derrota</button></td>
-      </tr>
-    </tbody>
-  </table>
+    <h1>Tabela de Classificação</h1>
+    <table style="width:100%">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Vitórias</th>
+                <th>Empates</th>
+                <th>Derrotas</th>
+                <th>Pontos</th>
+                <th colspan="3">Ações</th>
+            </tr>
+        </thead>
+        <tbody id="tabelaJogadores"></tbody>
+    </table>
 </body>
-
 </html>
